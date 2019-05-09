@@ -2,8 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import NotFound from './views/NotFound.vue'
 import Preview from './views/Preview.vue'
-import BlogHome from './views/BlogHome.vue'
+import Home from './views/Home.vue'
 import Article from './views/Article.vue'
+import About from './views/About.vue'
+import Exercise from './views/Exercise.vue'
 
 Vue.use(Router)
 
@@ -12,12 +14,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: { name: 'blog-home' }
+      redirect: { name: 'home' }
     },
     {
       path: '/blog',
-      name: 'blog-home',
-      component: BlogHome
+      name: 'home',
+      component: Home
     },
     {
       path: '/:uid',
@@ -25,6 +27,14 @@ export default new Router({
       component: Article
     },
     {
+      path: 'exercices/:uid',
+      name: 'exercise',
+      component: Exercise
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About
     },
     {
       path: '/not-found',

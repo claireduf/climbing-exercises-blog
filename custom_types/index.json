@@ -1,11 +1,21 @@
 [{
-  "id": "blog_home",
-  "name": "Blog Home",
+  "id": "home",
+  "name": "Home",
   "repeatable": false,
-  "value": "blog_home.json"
+  "value": "home.json"
 }, {
-  "id": "post",
-  "name": "Post",
+  "id": "about",
+  "name": "About",
+  "repeatable": false,
+  "value": "about.json"
+}, {
+  "id": "article",
+  "name": "Article",
   "repeatable": true,
-  "value": "post.json"
+  "value": "article.json"
+}, {
+  "id": "exercise",
+  "name": "Exercise",
+  "repeatable": true,
+  "value": "exercise.json"
 }]
