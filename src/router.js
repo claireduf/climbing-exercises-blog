@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import NotFound from './views/NotFound.vue'
 import Preview from './views/Preview.vue'
 import BlogHome from './views/BlogHome.vue'
-import Post from './views/Post.vue'
+import Article from './views/Article.vue'
 
 Vue.use(Router)
 
@@ -20,9 +20,11 @@ export default new Router({
       component: BlogHome
     },
     {
-      path: '/blog/:uid',
-      name: 'post',
-      component: Post
+      path: '/:uid',
+      name: 'article',
+      component: Article
+    },
+    {
     },
     {
       path: '/not-found',

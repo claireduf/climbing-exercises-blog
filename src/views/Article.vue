@@ -7,8 +7,8 @@
       <!-- Button to edit document in dashboard -->
       <prismic-edit-button :documentId="documentId"/>
 
-      <h1 class="blog-title">{{ $prismic.richTextAsPlain(fields.title) }}</h1>
-      <p class="blog-post-meta"><span class="created-at">{{ Intl.DateTimeFormat('en-US', dateOptions).format(new Date(fields.date)) }}</span></p>
+      <h1 class="title">{{ $prismic.richTextAsPlain(fields.title) }}</h1>
+      <p class="article-meta"><span class="created-at">{{ Intl.DateTimeFormat('en-US', dateOptions).format(new Date(fields.date)) }}</span></p>
 
     </div>
       <!-- Slice section template -->
@@ -39,7 +39,7 @@ import QuoteSlice from '../components/slices/QuoteSlice.vue'
 import ImageCaptionSlice from '../components/slices/ImageCaptionSlice.vue'
 
 export default {
-  name: 'post',
+  name: 'article',
   components: {
     TextSlice,
     QuoteSlice,
@@ -58,8 +58,8 @@ export default {
   },
   methods: {
     getContent (uid) {
-      //Query to get post content
-      this.$prismic.client.getByUID('post', uid)
+      //Query to get article content
+      this.$prismic.client.getByUID('article', uid)
         .then((document) => {
           if (document) {
             this.documentId = document.id
@@ -87,7 +87,7 @@ export default {
 </script>
 
 <style>
-.post-part.single a {
+.article-part.single a {
   text-decoration: none;
   background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.8) 75%);
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.8) 75%);
@@ -95,7 +95,7 @@ export default {
   background-size: 2px 2px;
   background-position: 0 23px;
 }
-.blog-post-meta {
+.blog-article-meta {
   color: #9A9A9A;
   font-family: 'Lato', sans-serif;
   margin-bottom: 8px;
@@ -103,16 +103,16 @@ export default {
 
 /* Media Queries */
 @media (max-width: 767px) {
-  .post-part pre {
+  .article-part pre {
     font-size: 14px;
   }
-  .blog-post-meta {
+  .blog-article-meta {
     font-size: 16px;
   }
 }
 
 @media screen and (min-width: 768px) {
-  .blog-post-meta {
+  .blog-article-meta {
     font-size: 16px;
   }
 }

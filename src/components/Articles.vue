@@ -1,47 +1,47 @@
 <template>
-  <!-- Check blog posts exist -->
-  <div v-if="posts.length !== 0" class="blog-main">
-    <!-- Template for blog posts -->
-    <div v-for="post in posts" :key="post.id" v-bind:post="post" class="blog-post">
-      <router-link :to="linkResolver(post)">
-        <h2>{{ $prismic.richTextAsPlain(post.data.title) }}</h2>
-        <p class="blog-post-meta"><span class="created-at">{{ Intl.DateTimeFormat('en-US', dateOptions).format(new Date(post.data.date)) }}</span></p>
+  <!-- Check articles exist -->
+  <div v-if="articles.length !== 0" class="blog-main">
+    <!-- Template for articles -->
+    <div v-for="article in articles" :key="article.id" v-bind:article="article" class="article">
+      <router-link :to="linkResolver(article)">
+        <h2>{{ $prismic.richTextAsPlain(article.data.title) }}</h2>
+        <p class="article-meta"><span class="created-at">{{ Intl.DateTimeFormat('en-US', dateOptions).format(new Date(article.data.date)) }}</span></p>
         <div>
-          <p>{{getFirstParagraph(post)}}</p>
+          <p>{{getFirstParagraph(article)}}</p>
         </div>
       </router-link>
     </div>
   </div>
-  <!-- If no blog posts return message -->
+  <!-- If no articles return message -->
   <div v-else class="blog-main">
-    <p>No Posts published at this time.</p>
+    <p>No Articles published at this time.</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'blog-posts',
+  name: 'articles',
   data () {
     return {
-      posts: [],
+      articles: [],
       dateOptions: { year: 'numeric', month: 'short', day: '2-digit' },
       linkResolver: this.$prismic.linkResolver
     }
   },
   methods: {
-    getPosts () {
-      //Query to get blog posts
+    getArticles () {
+      //Query to get articles
       this.$prismic.client.query(
-        this.$prismic.Predicates.at('document.type', 'post'),
-        { orderings : '[my.post.date desc]' }
+        this.$prismic.Predicates.at('document.type', 'article'),
+        { orderings : '[my.article.date desc]' }
       ).then((response) => {
-        this.posts = response.results;
+        this.articles = response.results;
       })
     },
-    //Function to get the first paragraph of text in a blog post and limit the displayed text at 300 characters
-    getFirstParagraph (post) {
+    //Function to get the first paragraph of text in an article and limit the displayed text at 300 characters
+    getFirstParagraph (article) {
       const textLimit = 300;
-      const slices = post.data.body;
+      const slices = article.data.body;
       let firstParagraph = '';
       let haveFirstParagraph = false;
 
@@ -71,7 +71,7 @@ export default {
     },
   },
   created () {
-    this.getPosts()
+    this.getArticles()
   }
 }
 </script>
@@ -81,13 +81,13 @@ export default {
   max-width: 700px;
   margin: auto;
 }
-.blog-post {
+.article {
   margin-bottom: 3rem;
 }
-.blog-post h2 {
+.article h2 {
   margin: 0;
 }
-.blog-post-meta {
+.article-meta {
   color: #9A9A9A;
   font-family: 'Lato', sans-serif;
   margin-bottom: 8px;
