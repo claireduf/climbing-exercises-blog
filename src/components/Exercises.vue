@@ -5,7 +5,7 @@
     <div v-for="exercise in exercises" :key="exercise.id" v-bind:exercise="exercise" class="exercise">
       <router-link :to="linkResolver(exercise)">
         <h2>{{ $prismic.richTextAsPlain(exercise.data.title) }}</h2>
-        <p class="exercise-meta"><span class="duration">{{ exercise.data.duration }}</span></p>
+        <p class="exercise-meta"><span class="duration">{{ getExerciseDuration(exercise) }}</span></p>
         <div>
           <p>{{getDescription(exercise)}}</p>
         </div>
@@ -40,7 +40,10 @@ export default {
     //Function to get the first paragraph of text in an article and limit the displayed text at 300 characters
     getDescription (exercise) {
       return exercise.data.description
-      }
+      },
+    getExerciseDuration (exercise){
+      return "Durée : " + exercise.data.duration + " min"
+    }
   },
   created () {
     this.getExercises()
