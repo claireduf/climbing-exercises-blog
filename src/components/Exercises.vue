@@ -5,7 +5,10 @@
     <div v-for="exercise in exercises" :key="exercise.id" v-bind:exercise="exercise" class="exercise">
       <router-link :to="linkResolver(exercise)">
         <h2>{{ $prismic.richTextAsPlain(exercise.data.title) }}</h2>
-        <p class="exercise-meta"><span class="duration">{{ getExerciseDuration(exercise) }}</span></p>
+        <p class="exercise-meta"><span class="duration">{{ getExerciseDuration(exercise) }}</span></br>
+        <span class="type_of_energetic">{{ getTypeOfEnergetic(exercise) }}</span></br>
+        <span class="mental_level">{{ getMentalLevel(exercise) }}</span></br>
+        <span class="place">{{ getPlace(exercise) }}</span></p>
         <div>
           <p>{{getDescription(exercise)}}</p>
         </div>
@@ -37,12 +40,27 @@ export default {
         this.exercises = response.results;
       })
     },
-    //Function to get the first paragraph of text in an article and limit the displayed text at 300 characters
     getDescription (exercise) {
       return exercise.data.description
       },
-    getExerciseDuration (exercise){
-      return "Durée : " + exercise.data.duration + " min"
+    getExerciseDuration (exercise) {
+      if (exercise.data.duration)
+        return "Durée : " + exercise.data.duration + " min"
+      else
+       return ""
+    },
+    getTypeOfEnergetic (exercise) {
+      if (exercise.data.type_of_energetic)
+        return exercise.data.type_of_energetic
+      else return "Pas de filière spécifique"
+    },
+    getMentalLevel (exercise) {
+      if (exercise.data.mental_level)
+        return "Mental : " + exercise.data.mental_level
+      else return "0"
+    },
+    getPlace (exercise) {
+      return exercise.data.place_for_exercise
     }
   },
   created () {
@@ -56,13 +74,13 @@ export default {
   max-width: 700px;
   margin: auto;
 }
-.article {
+.exercise {
   margin-bottom: 3rem;
 }
-.article h2 {
+.exercise h2 {
   margin: 0;
 }
-.article-meta {
+.exercise-meta {
   color: #9A9A9A;
   font-family: 'Lato', sans-serif;
   margin-bottom: 8px;
