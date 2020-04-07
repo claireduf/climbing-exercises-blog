@@ -10,10 +10,28 @@
       <h1 class="exercise-title">{{ $prismic.richTextAsPlain(fields.title) }}</h1>
       <p class="exercise-meta"><span class="created-at">{{ Intl.DateTimeFormat('en-US', dateOptions).format(new Date(fields.date)) }}</span></p>
 
+      </div>
+        <!-- Slice section template -->
+        <section v-for="(slice, index) in slices" :key="'slice-' + index">
+          <!-- Text slice template -->
+          <template v-if="slice.slice_type === 'text'">
+            <text-slice :text="slice.primary.text"/>
+          </template>
+          <!-- Quote slice template -->
+          <template v-else-if="slice.slice_type === 'quote'">
+            <quote-slice :quote="slice.primary.quote"/>
+          </template>
+          <!-- Image with caption slice template -->
+          <template v-else-if="slice.slice_type === 'image_with_caption'">
+            <image-caption-slice
+              :img="slice.primary.image"
+              :size="slice.slice_label"
+              :caption="slice.primary.caption"
+            />
+          </template>
+        </section>
     </div>
-      <p class="description">{{ $prismic.richTextAsPlain(fields.description) }}</p>
-  </div>
-</template>
+  </template>
 
 <script>
 
@@ -25,8 +43,7 @@ export default {
       fields: {
         title: null,
         description: null,
-        date: null,
-
+        date: null
       },
     }
   },
@@ -40,7 +57,7 @@ export default {
             this.fields.title = document.data.title
             this.fields.date = document.data.date
             this.fields.description = document.data.description
-          } 
+          }
           else {
             //returns error page
             this.$router.push({ name: 'not-found' })

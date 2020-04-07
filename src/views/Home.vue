@@ -14,7 +14,7 @@
       <p class="blog-description">{{ $prismic.richTextAsPlain(fields.description) }}</p>
     </div>
     <!-- Vue reference for articles component -->
-    <articles/>
+    <exercises/>
   </div>
   <!-- If no content return message -->
   <div v-else class="home">
@@ -23,13 +23,11 @@
 </template>
 
 <script>
-import Articles from '../components/Articles.vue'
 import Exercises from '../components/Exercises.vue'
 
 export default {
   name: 'home',
   components: {
-    Articles,
     Exercises
   },
   data () {
@@ -40,7 +38,6 @@ export default {
         description: null,
         image: null
       },
-      articles: [],
       exercises: [],
       linkResolver: this.$prismic.linkResolver,
       hasContent: false
