@@ -8,30 +8,14 @@
       <prismic-edit-button :documentId="documentId"/>
 
       <h1 class="exercise-title">{{ $prismic.richTextAsPlain(fields.title) }}</h1>
-      <p class="exercise-meta"><span class="created-at">{{ Intl.DateTimeFormat('en-US', dateOptions).format(new Date(fields.date)) }}</span></p>
+      <p class="exercise-meta"></p>
 
+      <div>
+        <p>{{getDescription(exercise)}}</p>
       </div>
-        <!-- Slice section template -->
-        <section v-for="(slice, index) in slices" :key="'slice-' + index">
-          <!-- Text slice template -->
-          <template v-if="slice.slice_type === 'text'">
-            <text-slice :text="slice.primary.text"/>
-          </template>
-          <!-- Quote slice template -->
-          <template v-else-if="slice.slice_type === 'quote'">
-            <quote-slice :quote="slice.primary.quote"/>
-          </template>
-          <!-- Image with caption slice template -->
-          <template v-else-if="slice.slice_type === 'image_with_caption'">
-            <image-caption-slice
-              :img="slice.primary.image"
-              :size="slice.slice_label"
-              :caption="slice.primary.caption"
-            />
-          </template>
-        </section>
     </div>
-  </template>
+  </div>
+</template>
 
 <script>
 
@@ -43,20 +27,26 @@ export default {
       fields: {
         title: null,
         description: null,
-        date: null
+        mental_level: null,
+        place_for_exercise: null,
+        type_of_energetic: null,
+        duration: null
       },
     }
   },
   methods: {
     getContent (uid) {
       //Query to get exercise content
-      this.$prismic.client.getByUID('exercise', uid)
+      this.$prismic.client.getByUID(uid)
         .then((document) => {
           if (document) {
             this.documentId = document.id
             this.fields.title = document.data.title
-            this.fields.date = document.data.date
             this.fields.description = document.data.description
+            this.fields.mental_level = document.data.mental_level
+            this.fields.place_for_exercise = document.data.place_for_exercise
+            this.fields.type_of_energetic = document.data.type_of_energetic
+            this.fields.duration = document.data.duration
           }
           else {
             //returns error page

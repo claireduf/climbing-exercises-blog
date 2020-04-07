@@ -9,9 +9,6 @@
         <span class="type_of_energetic">{{ getTypeOfEnergetic(exercise) }}</span></br>
         <span class="mental_level">{{ getMentalLevel(exercise) }}</span></br>
         <span class="place">{{ getPlace(exercise) }}</span></p>
-        <div>
-          <p>{{getDescription(exercise)}}</p>
-        </div>
       </router-link>
     </div>
   </div>
