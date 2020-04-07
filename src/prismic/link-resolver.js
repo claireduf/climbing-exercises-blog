@@ -13,7 +13,7 @@ export default function (doc) {
   }
 
   if (doc.type === 'exercise') {
-    return '/' + doc.uid
+    return '/exercises/' + doc.uid
   }
 
   if (doc.type === 'article') {

@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import NotFound from './views/NotFound.vue'
-import Preview from './views/Preview.vue'
 import Home from './views/Home.vue'
+import Exercise from './views/Exercise.vue'
 import Article from './views/Article.vue'
 import About from './views/About.vue'
-import Exercise from './views/Exercise.vue'
+
 
 Vue.use(Router)
 
@@ -18,12 +18,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/:uid',
-      name: 'article',
-      component: Article
-    },
-    {
-      path: '/:uid',
+      path: '/exercises/:uid',
       name: 'exercise',
       component: Exercise
     },

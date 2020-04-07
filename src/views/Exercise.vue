@@ -2,17 +2,18 @@
   <div class="main">
     <div class="outer-container">
       <div class="back">
-        <router-link to="./">back to list</router-link>
+        <router-link to="/">retour à la liste</router-link>
       </div>
+
+      <h1 class="exercise-title">{{ "fields.title" }}</h1>
+      <p class="exercise-meta"><span class="duration">{{ "fields.duration" }}</span></br>
+      <span class="type_of_energetic">{{ "fields.type_of_energetic" }}</span></br>
+      <span class="mental_level">{{ "fields.mental_level" }}</span></br>
+      <span class="place">{{ "fields.place" }}</span></p>
+
       <!-- Button to edit document in dashboard -->
-      <prismic-edit-button :documentId="documentId"/>
+      <prismic-edit-button :documentId="documentUid"/>
 
-      <h1 class="exercise-title">{{ $prismic.richTextAsPlain(fields.title) }}</h1>
-      <p class="exercise-meta"></p>
-
-      <div>
-        <p>{{getDescription(exercise)}}</p>
-      </div>
     </div>
   </div>
 </template>
@@ -24,23 +25,24 @@ export default {
   data () {
     return {
       documentId: '',
-      fields: {
+      fields : {
         title: null,
         description: null,
         mental_level: null,
         place_for_exercise: null,
         type_of_energetic: null,
         duration: null
-      },
+        }
     }
   },
   methods: {
     getContent (uid) {
       //Query to get exercise content
-      this.$prismic.client.getByUID(uid)
-        .then((document) => {
+      this.$prismic.client.query(
+        this.$prismic.Predicates.getByUID('exercise', uid)
+        ).then((document) => {
           if (document) {
-            this.documentId = document.id
+            this.documentId = document.data.uid
             this.fields.title = document.data.title
             this.fields.description = document.data.description
             this.fields.mental_level = document.data.mental_level
