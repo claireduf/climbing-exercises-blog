@@ -1,9 +1,9 @@
 {
-  "name": "climbing-blog",
+  "name": "climbing-exercises-blog",
   "version": "1.2.0",
-  "description": "Vue.js starter project with content managed in Prismic",
+  "description": "Des exercices pour l'escalade",
   "license": "Apache-2.0",
-  "repository": "github:claireduf/vuejs-starter",
+  "repository": "github:claireduf/climbing-exercises-blog",
   "author": "Claire",
   "scripts": {
     "serve": "vue-cli-service serve",
