@@ -14,10 +14,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: { name: 'home' }
-    },
-    {
-      path: '/blog',
       name: 'home',
       component: Home
     },
@@ -27,7 +23,7 @@ export default new Router({
       component: Article
     },
     {
-      path: 'exercices/:uid',
+      path: '/:uid',
       name: 'exercise',
       component: Exercise
     },
@@ -42,16 +38,11 @@ export default new Router({
       component: NotFound
     },
     {
-      path: '/preview',
-      name: 'preview',
-      component: Preview
-    },
-    {
       path: '*',
       redirect: { name: 'not-found' }
     }
   ],
   scrollBehavior () {
     return { x: 0, y: 0 }
-  }  
+  }
 })

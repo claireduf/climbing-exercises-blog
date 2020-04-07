@@ -12,8 +12,16 @@ export default function (doc) {
     return '/blog'
   }
 
-  if (doc.type === 'post') {
-    return '/blog/' + doc.uid
+  if (doc.type === 'exercise') {
+    return '/' + doc.uid
+  }
+
+  if (doc.type === 'article') {
+    return '/' + doc.uid
+  }
+
+  if (doc.type === 'about') {
+    return '/about/'
   }
 
   return '/not-found'
