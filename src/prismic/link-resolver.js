@@ -8,8 +8,8 @@ export default function (doc) {
     return '/not-found'
   }
 
-  if (doc.type === 'blog_home') {
-    return '/blog'
+  if (doc.type === 'home') {
+    return '/'
   }
 
   if (doc.type === 'exercise') {
@@ -17,7 +17,7 @@ export default function (doc) {
   }
 
   if (doc.type === 'article') {
-    return '/' + doc.uid
+    return '/articles/' + doc.uid
   }
 
   if (doc.type === 'about') {

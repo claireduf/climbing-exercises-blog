@@ -23,6 +23,11 @@ export default new Router({
       component: Exercise
     },
     {
+      path: '/articles/:uid',
+      name: 'article',
+      component: Article
+    },
+    {
       path: '/about',
       name: 'about',
       component: About

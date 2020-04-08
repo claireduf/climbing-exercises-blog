@@ -13,7 +13,7 @@
       <!-- Template for page description -->
       <p class="blog-description">{{ $prismic.richTextAsPlain(fields.description) }}</p>
     </div>
-    <!-- Vue reference for articles component -->
+    <!-- Vue reference for exercises component -->
     <exercises/>
   </div>
   <!-- If no content return message -->

@@ -2,53 +2,88 @@
   <div class="main">
     <div class="outer-container">
       <div class="back">
-        <router-link to="/">retour à la liste</router-link>
+        <router-link to="./">back to list</router-link>
       </div>
-
-      <h1 class="exercise-title">{{ "fields.title" }}</h1>
-      <p class="exercise-meta"><span class="duration">{{ "fields.duration" }}</span></br>
-      <span class="type_of_energetic">{{ "fields.type_of_energetic" }}</span></br>
-      <span class="mental_level">{{ "fields.mental_level" }}</span></br>
-      <span class="place">{{ "fields.place" }}</span></p>
-
       <!-- Button to edit document in dashboard -->
-      <prismic-edit-button :documentId="documentUid"/>
+      <prismic-edit-button :documentId="documentId"/>
+
+      <h1 class="title">{{ $prismic.richTextAsPlain(fields.title) }}</h1>
+      <p v-if="fields.duration" class="exercise-meta"><span class="duration">{{ "Durée : " + fields.duration + " min" }}</span></p>
+      <p v-if="fields.type_of_energetic" lass="exercise-meta"><span class="type_of_energetic">{{ "Filière travaillée : " + fields.type_of_energetic }}</span></p>
+      <p v-if="fields.place_for_exercise" class="exercise-meta"><span class="place_for_exercise">{{ "À faire en : " + fields.place_for_exercise }}</span></p>
+      <p v-if="fields.mental_level" class="exercise-meta"><span class="mental_level">{{ "Difficulté mentale : " + fields.mental_level }}</span></p>
+
+      <p class="exercise-part">{{ $prismic.richTextAsPlain(fields.description) }}</p>
 
     </div>
+      <!-- Slice section template -->
+      <section v-for="(slice, index) in slices" :key="'slice-' + index">
+        <!-- Text slice template -->
+        <template v-if="slice.slice_type === 'text'">
+          <text-slice :text="slice.primary.text"/>
+        </template>
+        <!-- Quote slice template -->
+        <template v-else-if="slice.slice_type === 'quote'">
+          <quote-slice :quote="slice.primary.quote"/>
+        </template>
+        <!-- Image with caption slice template -->
+        <template v-else-if="slice.slice_type === 'image_with_caption'">
+          <image-caption-slice
+            :img="slice.primary.image"
+            :size="slice.slice_label"
+            :caption="slice.primary.caption"
+          />
+        </template>
+      </section>
   </div>
 </template>
 
 <script>
+import TextSlice from '../components/slices/TextSlice.vue'
+import QuoteSlice from '../components/slices/QuoteSlice.vue'
+import ImageCaptionSlice from '../components/slices/ImageCaptionSlice.vue'
 
 export default {
   name: 'exercise',
+  components: {
+    TextSlice,
+    QuoteSlice,
+    ImageCaptionSlice
+  },
   data () {
     return {
+      dateOptions: { year: 'numeric', month: 'short', day: '2-digit' },
       documentId: '',
-      fields : {
+      fields: {
         title: null,
         description: null,
         mental_level: null,
         place_for_exercise: null,
         type_of_energetic: null,
         duration: null
-        }
+      },
+      slices: []
     }
   },
   methods: {
     getContent (uid) {
       //Query to get exercise content
-      this.$prismic.client.query(
-        this.$prismic.Predicates.getByUID('exercise', uid)
-        ).then((document) => {
+      this.$prismic.client.getByUID('exercise', uid)
+        .then((document) => {
+        this.$log.debug('le doc est ', document)
           if (document) {
-            this.documentId = document.data.uid
+          this.$log.debug('on y est')
+            this.documentId = document.id
             this.fields.title = document.data.title
             this.fields.description = document.data.description
             this.fields.mental_level = document.data.mental_level
-            this.fields.place_for_exercise = document.data.place_for_exercise
             this.fields.type_of_energetic = document.data.type_of_energetic
+            this.fields.place_for_exercise = document.data.place_for_exercise
             this.fields.duration = document.data.duration
+            this.$log.debug('mental_level: ', this.fields.mental_level)
+
+            //Set slices as variable
+            this.slices = document.data.body
           }
           else {
             //returns error page
@@ -68,7 +103,7 @@ export default {
 </script>
 
 <style>
-.description a {
+.exercise-part.single a {
   text-decoration: none;
   background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.8) 75%);
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.8) 75%);
@@ -84,7 +119,7 @@ export default {
 
 /* Media Queries */
 @media (max-width: 767px) {
-  .post-part pre {
+  .exercise-part pre {
     font-size: 14px;
   }
   .exercise-meta {

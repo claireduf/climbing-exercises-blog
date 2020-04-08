@@ -17,3 +17,17 @@ new Vue({
   router,
   render: h => h(App)
 }).$mount('#app')
+
+import VueLogger from 'vuejs-logger';
+
+const options = {
+    isEnabled: true,
+    logLevel : 'debug',
+    stringifyArguments : false,
+    showLogLevel : true,
+    showMethodName : true,
+    separator: '|',
+    showConsoleColors: true
+};
+
+Vue.use(VueLogger, options);
