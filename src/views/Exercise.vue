@@ -53,8 +53,6 @@ export default {
             this.fields.duration = document.data.duration
             this.$log.debug('mental_level: ', this.fields.mental_level)
 
-            //Set slices as variable
-            this.slices = document.data.body
           }
           else {
             //returns error page
