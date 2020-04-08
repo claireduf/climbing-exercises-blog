@@ -1,8 +1,7 @@
 <template>
   <footer class="footer">
-    <a href="https://prismic.io" target="_blank" rel="noopener">
-      <img class="logo" src="../assets/img/prismic-logo.svg" alt="Prismic">
-    </a>
+    <img class="logo" src="../assets/img/patate.gif" alt="Patate">
+    <p class="footer-text">Une création Patate</p>
   </footer>
 </template>
 
@@ -22,5 +21,11 @@ export default {
 }
 .logo {
   width: 100px;
+}
+
+.footer-text {
+  font-family: 'Lato', sans-serif;
+  color: #9A9A9A;
+  font-size: 10px;
 }
 </style>
