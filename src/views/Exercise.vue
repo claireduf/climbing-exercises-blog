@@ -16,43 +16,15 @@
       <p class="exercise-part">{{ $prismic.richTextAsPlain(fields.description) }}</p>
 
     </div>
-      <!-- Slice section template -->
-      <section v-for="(slice, index) in slices" :key="'slice-' + index">
-        <!-- Text slice template -->
-        <template v-if="slice.slice_type === 'text'">
-          <text-slice :text="slice.primary.text"/>
-        </template>
-        <!-- Quote slice template -->
-        <template v-else-if="slice.slice_type === 'quote'">
-          <quote-slice :quote="slice.primary.quote"/>
-        </template>
-        <!-- Image with caption slice template -->
-        <template v-else-if="slice.slice_type === 'image_with_caption'">
-          <image-caption-slice
-            :img="slice.primary.image"
-            :size="slice.slice_label"
-            :caption="slice.primary.caption"
-          />
-        </template>
-      </section>
   </div>
 </template>
 
 <script>
-import TextSlice from '../components/slices/TextSlice.vue'
-import QuoteSlice from '../components/slices/QuoteSlice.vue'
-import ImageCaptionSlice from '../components/slices/ImageCaptionSlice.vue'
 
 export default {
   name: 'exercise',
-  components: {
-    TextSlice,
-    QuoteSlice,
-    ImageCaptionSlice
-  },
   data () {
     return {
-      dateOptions: { year: 'numeric', month: 'short', day: '2-digit' },
       documentId: '',
       fields: {
         title: null,
@@ -61,8 +33,7 @@ export default {
         place_for_exercise: null,
         type_of_energetic: null,
         duration: null
-      },
-      slices: []
+      }
     }
   },
   methods: {
