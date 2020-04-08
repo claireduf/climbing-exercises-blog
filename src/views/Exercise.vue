@@ -41,9 +41,7 @@ export default {
       //Query to get exercise content
       this.$prismic.client.getByUID('exercise', uid)
         .then((document) => {
-        this.$log.debug('le doc est ', document)
           if (document) {
-          this.$log.debug('on y est')
             this.documentId = document.id
             this.fields.title = document.data.title
             this.fields.description = document.data.description
@@ -51,7 +49,6 @@ export default {
             this.fields.type_of_energetic = document.data.type_of_energetic
             this.fields.place_for_exercise = document.data.place_for_exercise
             this.fields.duration = document.data.duration
-            this.$log.debug('mental_level: ', this.fields.mental_level)
 
           }
           else {
